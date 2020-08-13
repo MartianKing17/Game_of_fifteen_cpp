@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+52d0bc5372935b22ba7966640297fcab CMakeFiles/Game_of_fifteen_autogen
+8a52e57c46f4f0e32ea9de34272e1fb2 Game_of_fifteen_autogen/EWIEGA46WW/qrc_qml.cpp
