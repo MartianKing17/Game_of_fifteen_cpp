@@ -1,53 +1,53 @@
-import QtQuick 2.0
+import QtQuick 2.12
 import QtQuick.Controls 1.2
 
 Rectangle {
-    id: gameOverMenu
-    property var window
+    id: _gameOverMenu
+    property var window;
 
     function setDefWin(win) {
         window = win;
     }
 
-    Rectangle
-    {
-        id: text
-        width: parent.width
-        height: (parent.height * 80) / 100
-
-        Text {
-            text: qsTr("Would you like game again?")
-            font.pixelSize: Math.min(parent.width, parent.height) / 10
-        }
+    Text {
+        id: _text
+        text: "Would you like game again?"
+        width: parent.width * 0.8
+        height: parent.height * 0.8
     }
 
     Rectangle {
-        height: (parent.height * 20) / 100
+        height: _gameOverMenu.height - _text.height
         width: parent.width
-        anchors.top: text.bottom
-        anchors.topMargin: 5
+        anchors.top: _text.bottom
+        anchors.topMargin: height / 20
 
         Button {
-            id: restart
+            id: _restart
             text: "Restart"
             height: parent.height
-            width: parent.width / 2
+            width: parent.width / 2.2
             anchors.left: parent.left
+            anchors.leftMargin: parent.width / 35
             onClicked: {
-                view.model.shuffle();
-                gameOverMenu.visible = false;
+                _gameOverMenu.visible = false;
                 window.visible = true;
-                mix.visible = true;
             }
         }
 
         Button {
             text: "Exit"
             height: parent.height
-            width: parent.width / 2
-            anchors.left: restart.right
-            anchors.leftMargin: 5
+            width: parent.width / 2.2
+            anchors.left: _restart.right
+            anchors.leftMargin: parent.width / 40
             onClicked: Qt.quit()
+        }
+
+        Component.onCompleted:
+        {
+            _restart.clicked.connect(_mainWindow.signalEnteringElement)
+            _restart.clicked.connect(_mainWindow.mixVisibility)
         }
     }
 }

@@ -3,7 +3,7 @@ import QtQuick.Window 2.14
 import gameboard 1.0
 
 GridView {
-    id: view
+    id: _view
     interactive: false
 
     model: GameBoardModel {
@@ -11,13 +11,12 @@ GridView {
     }
 
     delegate: Item {
-        width: view.cellWidth
-        height: view.cellHeight
+        width: _view.cellWidth
+        height: _view.cellHeight
         Tile {
             id: tile
-            color: model.number === "" ? "white" : model.color
-            width: view.cellWidth
-            height: view.cellHeight
+            anchors.fill: parent
+            color: model.color
             number: model.number
             border.color: "black"
             border.width: 1
@@ -27,17 +26,16 @@ GridView {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                view.model.move(index);
+                _view.model.move(index);
 
-                if (view.model.checkingGameOver() === true) {
-                    menu.setDefWin(view);
-                    view.visible = false;
-                    menu.visible = true;
-                    mix.visible = false;
+                if(_view.model.checkingGameOver() === true) {
+                    _menu.setDefWin(_view);
+                    _view.visible = false;
+                    _menu.visible = true;
+                    _mix.visible = false;
                 }
             }
         }
-
     }
 
     move: Transition {
